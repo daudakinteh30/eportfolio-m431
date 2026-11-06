@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>E-Portfolio Modul 431 – Dauda Kinteh</title>
+<style>
+:root{--fg:#1f2340;--mut:#6b7190;--acc:#4f46e5;--acc2:#0ea5e9;--ink:#1e1b4b;--bd:#e3e7f3;--soft:#f5f7ff;color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+*{box-sizing:border-box}html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;color:var(--fg);font:16px/1.65 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:#fff linear-gradient(180deg,#f1f4ff 0,#fff 300px) no-repeat;min-height:100vh}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:#fff;z-index:20}
+nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:10;display:flex;gap:4px;overflow-x:auto;padding:10px 16px;background:rgba(255,255,255,.92);backdrop-filter:saturate(1.4) blur(10px);box-shadow:0 1px 0 var(--bd);font-size:14px}
+nav a{padding:6px 12px;color:var(--mut);text-decoration:none;white-space:nowrap;border-radius:99px;font-weight:500;transition:.15s}
+nav a:hover:not(.on){background:var(--soft);color:var(--ink)}
+nav a.on{background:linear-gradient(135deg,var(--acc),var(--acc2));color:#fff;font-weight:600;box-shadow:0 2px 8px rgba(79,70,229,.25)}
+main{max-width:760px;margin:auto;padding:28px 18px 72px}
+h1{font-size:26px;line-height:1.25;margin:6px 0 8px;color:var(--ink);letter-spacing:-.01em}
+body[data-p="start"] main>h1{font-size:38px;line-height:1.12;background:linear-gradient(90deg,var(--acc),var(--acc2));-webkit-background-clip:text;background-clip:text;color:transparent;padding-bottom:4px}
+body[data-p="start"] main>h1+p{font-size:17px}
+h2{font-size:16px;margin:32px 0 12px;padding-left:12px;color:var(--ink);border-left:4px solid var(--acc);border-image:linear-gradient(180deg,var(--acc),var(--acc2)) 1}
+a{color:var(--acc)}.mut{color:var(--mut);font-size:14px}
+.item{display:block;padding:12px 16px;margin:8px 0;background:#fff;border:1px solid var(--bd);border-radius:12px;box-shadow:0 1px 2px rgba(30,27,75,.04);transition:.15s}
+.item:hover{border-color:var(--acc);box-shadow:0 6px 18px rgba(79,70,229,.12)}
+.item a{text-decoration:none;color:var(--ink);font-weight:600}.item a:hover{color:var(--acc)}
+.tag{display:inline-block;font-size:12px;font-weight:600;padding:2px 10px;border-radius:99px;background:#eef2ff;color:#4338ca;margin-right:6px}
+.tag.ok{background:#dcfce7;color:#166534}
+.sc{overflow-x:auto;background:#fff;border:1px solid var(--bd);border-radius:12px;box-shadow:0 1px 2px rgba(30,27,75,.04);margin:6px 0}
+table{border-collapse:collapse;width:100%;font-size:14.5px}
+th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--bd);vertical-align:top}
+th{font-size:12px;letter-spacing:.04em;text-transform:uppercase;color:#4338ca;background:var(--soft);font-weight:700}
+tr:last-child td{border-bottom:0}
+ul{padding-left:22px;margin:6px 0}li{margin:4px 0}li::marker{color:var(--acc)}
+.ed{border-left:4px solid var(--acc2);background:var(--soft);padding:10px 14px;margin:6px 0 14px;border-radius:0 10px 10px 0;outline:none}
+.ed:focus{box-shadow:0 0 0 3px rgba(14,165,233,.2)}
+label{display:block;font-weight:600;font-size:14px;margin:16px 0 5px;color:var(--ink)}label i{color:#be123c;font-style:normal;font-weight:400}
+input,select,textarea{width:100%;font:inherit;font-size:16px;padding:10px 12px;border:1px solid #cfd5ea;border-radius:10px;background:#fff;color:var(--fg)}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--acc);box-shadow:0 0 0 3px rgba(79,70,229,.15)}
+textarea{min-height:70px}
+input.dn,.ck input{width:auto;cursor:pointer;accent-color:var(--acc);transform:scale(1.15)}
+.ck label{display:flex;gap:10px;font-weight:400;margin:8px 0;color:var(--fg)}
+button,.btn{font:inherit;font-weight:600;padding:10px 18px;border:0;border-radius:10px;background:linear-gradient(135deg,var(--acc),var(--acc2));color:#fff;cursor:pointer;text-decoration:none;display:inline-block;box-shadow:0 2px 8px rgba(79,70,229,.3)}
+button.s{background:var(--soft);color:var(--ink);box-shadow:none;border:1px solid var(--bd)}
+button.del{background:#fff;color:#be123c;border:1px solid #be123c;box-shadow:none}
+.err{color:#be123c;font-size:14px;margin-top:10px}.okk{color:#15803d}
+</style>
+</head>
+<body>
+<nav id="nav"></nav>
+<main id="app"></main>
+<script>
+/* ===== NEUE EINTRÄGE: Block kopieren, Komma setzen.
+   typ "l" = Lernjournal-Eintrag, typ "t" = Thema (dann kategorie: k11 | k12 | k13 | k14 | k15 für Kapitel 1.1 bis 1.5).
+   Pflicht: verknuepfung, praxis, phasen (6 Stück). links = Schlüssel anderer Einträge, z. B. ["l1","t1"] ===== */
+const ENTRIES=[{
+ typ:"l",id:1,datum:"30.10.2026",
+ titel:"Einstieg ins Modul und Geschichte von Schnelli Bleich",
+ lernziel:"Voraussetzungen kennenlernen, um weniger Fehler zu machen",
+ gelernt:["Wir haben die Geschichte von Schnelli Bleich kennengelernt, der drei Aufträge erhielt und dabei Fehler machte.","Die Geschichte zeigt, wie wichtig es ist, Aufträge richtig und sorgfältig auszuführen.","Die vier Kompetenzbereiche: Fachkompetenz (Fachwissen), Methodenkompetenz (Aufgaben sinnvoll angehen), Sozialkompetenz (Zusammenarbeit) und Selbstkompetenz (selbstständig und verantwortungsbewusst handeln).","Wir haben das Ziel des Moduls 431 und den Aufbau des E-Portfolios besprochen."],
+ reflexion:{neu:"Vor allem die Geschichte, da wir sonst nicht viel mehr gemacht haben.",schwer:"Alles fiel mir leicht, da es nicht allzu schwer war.",wie:"Ich habe zugehört.",anders:"–"},
+ phasen:["Ich habe mitgemacht und die Infos bekommen.","Beim Lernjournal will ich es so schnell wie möglich machen.","Bis jetzt eher nur zugehört.","Bis jetzt mein E-Portfolio gestartet.","Ja, da es sehr viel Zuhören war.","Ich hätte nachgefragt, wenn ich etwas nicht verstanden hätte."],
+ verknuepfung:"Die vier Kompetenzbereiche hängen mit meiner Lehre zusammen: Fachkompetenz brauche ich für ServiceNow und Linux, Sozialkompetenz im Kundenkontakt am Service Desk. IPERKA zeigt später, wie ich Aufträge systematisch angehe, damit mir keine Fehler wie Schnelli Bleich passieren.",
+ links:[],
+ praxis:"Am Service Desk bei Straumann bearbeite ich Kunden-Tickets. Schliesse ich ein Ticket zu schnell ab, ohne nachzufragen, mache ich denselben Fehler wie Schnelli Bleich. Darum frage ich bei Unklarheiten nach (Sozialkompetenz) und prüfe, ob die Lösung das Problem wirklich behebt (Selbstkompetenz)."
+}];
+
+const KATS=[["k11","Kapitel 1.1"],["k12","Kapitel 1.2"],["k13","Kapitel 1.3"],["k14","Kapitel 1.4"],["k15","Kapitel 1.5"]];
+const KL=Object.fromEntries(KATS.map(k=>[k[0],k[1]]));
+const PH=[["Informieren","Was ist der Auftrag, was ist gegeben, was fehlt?"],["Planen","Welche Schritte brauche ich, in welcher Reihenfolge, bis wann?"],["Entscheiden","Welche Variante wähle ich und warum?"],["Realisieren","Wie führe ich die Arbeit durch?"],["Kontrollieren","Stimmt das Ergebnis mit dem Auftrag überein?"],["Auswerten","Was lief gut, was würde ich anders machen?"]];
+const EINL=[["1.1","Über mich","Ich heisse Dauda Kinteh und mache eine Ausbildung als Informatiker EFZ in der Fachrichtung Plattformentwicklung. Mein Lehrbetrieb ist die Straumann Group. Besonders interessieren mich Cybersecurity, Netzwerke und IT-Infrastruktur."],
+["1.2","Ziel des Moduls","Nach dem Modul 431 soll ich Aufträge selbstständig planen, organisieren, durchführen und kontrollieren können. Ausserdem möchte ich lernen, Probleme systematisch zu lösen und Projekte erfolgreich umzusetzen."],
+["1.3","Ziel und Aufbau dieses E-Portfolios","Das E-Portfolio hält meinen ganzen Lernweg im Modul 431 fest: das Lernjournal, die Themen, IPERKA, Verknüpfungen, Praxisbeispiele und mein Fazit. Jeder Eintrag (Lernjournal und Thema) hat eine Reflexion, Verknüpfungen, ein Praxisbeispiel und ein eigenes IPERKA."],
+["1.4","Gewähltes Instrument","Ich habe mein E-Portfolio als Website erstellt. Sie eignet sich gut, weil ich Einträge jederzeit ergänzen, Verknüpfungen setzen und das Ganze per Link veröffentlichen kann."],
+["1.5","Lernjournal, Themen und E-Portfolio","Das Lernjournal enthält meine Einträge pro Lektion, zum Beispiel die Geschichte von Schnelli Bleich. Die Themen (Kreativitätstechniken, Präsentationstechniken, Projektmanagement) schreibe ich als eigene Einträge. Das E-Portfolio ist das Ganze: Lernjournal, Themen, IPERKA, Verknüpfungen, Praxisbeispiele und Fazit."]];
+const PRAXISTRANSFER="",FAZIT="",QUELLEN=[];
+const CHECK=["1.1 bis 1.5 sind ausgefüllt","Jeder Eintrag hat Reflexion, Verknüpfungen und Praxisbeispiel","Jeder Eintrag hat ein eigenes IPERKA (alle sechs Phasen)","Themen 5 bis 7 sind als eigene Einträge angelegt","Ein Praxistransfer (Kapitel 9) ist ausführlich dokumentiert","Gesamtreflexion und Fazit geschrieben","Quellen angegeben (Internettexte max. 20 %)","Rechtschreibung geprüft","Termin der Abgabe eingehalten"];
+
+const $=s=>document.querySelector(s);
+const esc=s=>String(s==null?"":s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const store={get(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+const key=e=>e.typ+e.id,lab=e=>(e.typ==="l"?"Lernjournal ":"Thema ")+e.id;
+const all=()=>ENTRIES.concat(store.get("m431-local",[])).filter(e=>!store.get("m431-del",[]).includes(key(e))).sort((a,b)=>a.typ===b.typ?a.id-b.id:(a.typ<b.typ?-1:1));
+const get=k=>all().find(e=>key(e)===k);
+const doneList=()=>store.get("m431-done",[1]);
+const link=e=>`<a href="#${e.typ}-${e.id}">${lab(e)}: ${esc(e.titel)}</a>`;
+const NAV=[["start","E-Portfolio"],["einleitung","Einleitung"],["lernjournal","Lernjournal"],["themen","Themen"],["iperka","IPERKA"],["abschluss","Abschluss"],["neu","+ Neu"]];
+const tbl=e=>`<div class="sc"><table><tr><th>Phase</th><th>Leitfrage</th><th>Mein Beispiel</th></tr>${PH.map((p,i)=>`<tr><td><b>${p[0]}</b></td><td>${p[1]}</td><td>${esc((e.phasen||[])[i])}</td></tr>`).join("")}</table></div>`;
+
+function start(){
+ const es=all(),nd=doneList().filter(i=>i>=1&&i<=6).length;
+ const T=[["1","Einleitung","einleitung"],["2","Überblick (Lektionen)","lernjournal"],["3","Lernjournal-Einträge","lernjournal"],["4","Modelle der vollständigen Handlung (IPERKA)","iperka"],["5","Kreativitätstechniken","themen"],["6","Präsentationstechniken","themen"],["7","Projektmanagement","themen"],["8","Verknüpfungen","abschluss"],["9","Praxistransfer","abschluss"],["10","Gesamtreflexion und Fazit","abschluss"],["11","Quellenverzeichnis","abschluss"],["12","Checkliste vor der Abgabe","abschluss"]];
+ return `<h1>E-Portfolio Modul 431</h1><p class="mut">Aufträge im IT-Umfeld selbstständig durchführen. Mein Lernweg: Was ich gelernt habe, wie ich es angewendet habe und was ich daraus mitnehme.</p>
+ <div class="sc"><table><tr><th>Angabe</th><th>Eintrag</th></tr><tr><td>Name</td><td>Dauda Kinteh</td></tr><tr><td>Klasse</td><td>INP 26-30A</td></tr><tr><td>Schule</td><td>BBZBL</td></tr><tr><td>Modul</td><td>M431</td></tr></table></div>
+ <p class="mut">${nd} von 6 Lektionen abgeschlossen · ${es.filter(e=>e.typ==="l").length} Lernjournal-Einträge · ${es.filter(e=>e.typ==="t").length} Themen</p>
+ <h2>Inhaltsverzeichnis</h2>${T.map(t=>`<div class="item"><a href="#${t[2]}">${t[0]}&nbsp; ${t[1]}</a></div>`).join("")}`;
+}
+
+function einleitung(){
+ const sv=store.get("m431-einl",{});
+ return `<h1>1 Einleitung</h1><p class="mut">Ich bin Dauda Kinteh, Klasse INP 26-30A. Im Modul 431 lerne ich, Aufträge im IT-Umfeld selbstständig und strukturiert durchzuführen.</p>
+ ${EINL.map(s=>`<h2>${s[0]} ${s[1]}</h2><div class="ed" contenteditable="true" data-k="${s[0]}">${esc(sv[s[0]]||s[2])}</div>`).join("")}
+ <p class="mut">Tipp: Texte anklicken und direkt ändern. Änderungen bleiben nur in deinem Browser.</p>`;
+}
+
+function lernjournal(){
+ const es=all().filter(e=>e.typ==="l"),dn=doneList();let r="";
+ for(let i=1;i<=6;i++){const e=es.find(x=>x.id===i),d=dn.includes(i);
+  r+=`<tr><td><input type="checkbox" class="dn" data-i="${i}" ${d?"checked":""} aria-label="Lektion ${i} abgeschlossen"></td><td>${i}</td><td>${e?esc(e.datum):"–"}</td><td>${e?`<a href="#l-${i}">${esc(e.titel)}</a>`:'<span class="mut">noch kein Eintrag</span>'}</td><td><span class="tag ${d?"ok":""}">${d?"abgeschlossen":"offen"}</span></td></tr>`}
+ const extra=es.filter(e=>e.id>6);
+ return `<h1>2 und 3 Lernjournal</h1><p class="mut">Ein Eintrag pro Lektion. Häkchen setzen, um eine Lektion abzuschliessen.</p>
+ <div class="sc"><table><tr><th>✔</th><th>Nr.</th><th>Datum</th><th>Thema</th><th>Stand</th></tr>${r}</table></div>
+ ${extra.map(e=>`<div class="item"><a href="#l-${e.id}">${e.id}. ${esc(e.titel)}</a> <span class="mut">${esc(e.datum)}</span></div>`).join("")}
+ <p><a class="btn" href="#neu">+ Lernjournal-Eintrag</a></p>`;
+}
+
+function themen(){
+ const es=all().filter(e=>e.typ==="t");
+ return `<h1>5 bis 7 Themen</h1><p class="mut">Kapitel 1.1 bis 1.5. Jedes Thema ist ein eigener Eintrag, den du selbst schreibst.</p><p><a class="btn" href="#neu-t">+ Neues Thema</a></p>
+ ${KATS.map(k=>{const l=es.filter(e=>e.kategorie===k[0]);return `<h2>${k[1]}</h2>${l.map(e=>`<div class="item"><a href="#t-${e.id}">${esc(e.titel)}</a></div>`).join("")||'<p class="mut">Noch kein Eintrag.</p>'}`}).join("")}`;
+}
+
+function eintrag(k){
+ const e=get(k);if(!e)return "<h1>Nicht gefunden</h1><p><a href='#start'>Zur Startseite</a></p>";
+ const r=e.reflexion||{},ln=(e.links||[]).map(get).filter(Boolean),L=e.typ==="l";
+ return `<p class="mut"><a href="#${L?"lernjournal":"themen"}">← ${L?"Lernjournal":"Themen"}</a></p>
+ <p class="mut">${lab(e)}${e.kategorie?" · "+KL[e.kategorie]:""}${e.datum?" · "+esc(e.datum):""}</p><h1>${esc(e.titel)}</h1>
+ ${e.lernziel?`<p class="mut">Lernziel: ${esc(e.lernziel)}</p>`:""}
+ ${L&&e.id<=6?`<p><label style="display:inline-flex;gap:8px;align-items:center;margin:0"><input type="checkbox" class="dn" data-i="${e.id}" ${doneList().includes(e.id)?"checked":""}> Lektion abgeschlossen</label></p>`:""}
+ <h2>Das habe ich gelernt</h2><ul>${(e.gelernt||[]).map(x=>`<li>${esc(x)}</li>`).join("")}</ul>
+ <h2>IPERKA</h2>${tbl(e)}
+ <h2>Reflexion</h2><div class="sc"><table>
+ <tr><td><b>Was habe ich Neues gelernt?</b></td><td>${esc(r.neu)}</td></tr><tr><td><b>Was fiel mir leicht, was schwer?</b></td><td>${esc(r.schwer)}</td></tr>
+ <tr><td><b>Wie habe ich gelernt?</b></td><td>${esc(r.wie)}</td></tr><tr><td><b>Was mache ich nächstes Mal anders?</b></td><td>${esc(r.anders)}</td></tr></table></div>
+ <h2>Verknüpfungen</h2><p>${esc(e.verknuepfung)}</p>${ln.length?`<p class="mut">Verknüpft mit: ${ln.map(link).join(" · ")}</p>`:""}
+ <h2>Praxisbeispiel</h2><p>${esc(e.praxis)}</p>
+ <p class="mut">Im E-Portfolio: <a href="#iperka">4 IPERKA</a> · <a href="#abschluss">8 Verknüpfungen und 9 Praxistransfer</a></p>
+ <p><button class="del" id="del">Eintrag löschen</button></p>`;
+}
+
+function iperka(){
+ return `<h1>4 IPERKA</h1><p class="mut">Modell der vollständigen Handlung. Jeder Eintrag hat sein eigenes IPERKA, hier sind alle gesammelt.</p>
+ ${all().map(e=>`<h2>${link(e)}</h2>${tbl(e)}`).join("")}`;
+}
+
+function abschluss(){
+ const es=all(),done=store.get("m431-check",[]);
+ return `<h1>8 bis 12 Abschluss</h1>
+ <h2>8 Verknüpfungen</h2>${es.map(e=>`<div class="item"><b>${link(e)}</b><br>${esc(e.verknuepfung)}</div>`).join("")}
+ <h2>9 Praxistransfer</h2>${PRAXISTRANSFER?`<p>${esc(PRAXISTRANSFER)}</p>`:'<p class="mut">Das ausführliche Praxisbeispiel wird später ergänzt. Bis dahin: die Praxisbeispiele der Einträge.</p>'}
+ ${es.map(e=>`<div class="item"><a href="#${e.typ}-${e.id}">${lab(e)}:</a> ${esc(e.praxis)}</div>`).join("")}
+ <h2>10 Gesamtreflexion und Fazit</h2>${FAZIT?`<p>${esc(FAZIT)}</p>`:'<p class="mut">Wird am Ende des Moduls ergänzt.</p>'}
+ <h2>11 Quellenverzeichnis</h2>${QUELLEN.length?`<ul>${QUELLEN.map(q=>`<li>${esc(q)}</li>`).join("")}</ul>`:'<p class="mut">Noch keine Quellen.</p>'}
+ <h2>12 Checkliste vor der Abgabe</h2><div class="ck">${CHECK.map((c,i)=>`<label><input type="checkbox" data-c="${i}" ${done.includes(i)?"checked":""}> ${esc(c)}</label>`).join("")}</div>`;
+}
+
+function neu(){
+ const f=(i,l,req,r)=>`<label for="${i}">${l}${req?" <i>(Pflicht)</i>":""}</label><textarea id="${i}" rows="${r||2}"></textarea>`;
+ return `<h1>Neuer Eintrag</h1><p class="mut">Verknüpfungen, Praxisbeispiel und alle sechs IPERKA-Phasen sind Pflicht, auch bei Themen.</p>
+ <label for="f-typ">Art des Eintrags</label><select id="f-typ"><option value="l">Lernjournal-Eintrag (Lektion)</option><option value="t">Thema (Kapitel 1.1 bis 1.5)</option></select>
+ <div id="kw"><label for="f-kat">Thema</label><select id="f-kat">${KATS.map(k=>`<option value="${k[0]}">${k[1]}</option>`).join("")}</select></div>
+ <label for="f-id">Nummer</label><input id="f-id" type="number" min="1">
+ <label for="f-datum">Datum</label><input id="f-datum" placeholder="TT.MM.JJJJ">
+ <label for="f-titel">Titel <i>(Pflicht)</i></label><input id="f-titel"><label for="f-lz">Lernziel</label><input id="f-lz">
+ ${f("f-gelernt","Das habe ich gelernt (ein Punkt pro Zeile)",0,5)}
+ ${f("f-neu","Reflexion: Was habe ich Neues gelernt?")}${f("f-schwer","Reflexion: Was fiel mir leicht, was schwer?")}${f("f-wie","Reflexion: Wie habe ich gelernt?")}${f("f-anders","Reflexion: Was mache ich nächstes Mal anders?")}
+ <h2>IPERKA</h2>${PH.map((p,i)=>f("f-p"+i,p[0]+": "+p[1],1,1)).join("")}
+ <h2>Verknüpfungen und Praxis</h2>${f("f-verk","Verknüpfungen: Womit hängt das zusammen (andere Lektion, Thema, Lehrbetrieb)?",1,3)}
+ <label for="f-links">Verknüpft mit anderen Einträgen (z. B. L1, T1)</label><input id="f-links">
+ ${f("f-praxis","Praxisbeispiel: Wo wende ich das konkret an?",1,3)}
+ <div id="err" class="err"></div><p><button id="save">Eintrag speichern</button></p>
+ <h2>Dauerhaft veröffentlichen</h2><p class="mut">Gespeicherte Einträge liegen nur in deinem Browser. Kopiere den Code und schick ihn mir, dann baue ich ihn fest in die Website ein.</p>
+ <textarea id="code" readonly placeholder="Code erscheint nach dem Speichern"></textarea><p><button class="s" id="copy">Code kopieren</button></p>`;
+}
+function bindNeu(t){
+ const sync=()=>{const ty=$("#f-typ").value;$("#kw").style.display=ty==="t"?"":"none";$("#f-id").value=Math.max(0,...all().filter(e=>e.typ===ty).map(e=>e.id))+1};
+ $("#f-typ").value=t;$("#f-typ").onchange=sync;sync();
+ $("#save").onclick=()=>{
+  const g=i=>$("#"+i).value.trim(),er=$("#err"),bad=m=>{er.className="err";er.textContent=m};
+  const ty=g("f-typ");
+  if(!g("f-titel"))return bad("Bitte einen Titel eingeben.");
+  if(ty==="l"&&!g("f-datum"))return bad("Bitte das Datum der Lektion eingeben.");
+  for(let i=0;i<6;i++)if(g("f-p"+i).length<5)return bad("IPERKA: Die Phase „"+PH[i][0]+"“ fehlt.");
+  if(g("f-verk").length<20)return bad("Die Verknüpfungen fehlen oder sind zu kurz (mind. 20 Zeichen).");
+  if(g("f-praxis").length<20)return bad("Das Praxisbeispiel fehlt oder ist zu kurz (mind. 20 Zeichen).");
+  const e={typ:ty,id:+g("f-id"),datum:g("f-datum"),titel:g("f-titel"),lernziel:g("f-lz"),gelernt:g("f-gelernt").split("\n").map(s=>s.trim()).filter(Boolean),
+   reflexion:{neu:g("f-neu"),schwer:g("f-schwer"),wie:g("f-wie"),anders:g("f-anders")},phasen:PH.map((p,i)=>g("f-p"+i)),
+   verknuepfung:g("f-verk"),links:g("f-links").toLowerCase().split(/[^lt0-9]+/).filter(x=>/^[lt]\d+$/.test(x)),praxis:g("f-praxis")};
+  if(ty==="t")e.kategorie=g("f-kat");
+  if(ENTRIES.some(x=>key(x)===key(e)))return bad("Diese Nummer ist schon vergeben.");
+  const loc=store.get("m431-local",[]).filter(x=>key(x)!==key(e));loc.push(e);store.set("m431-local",loc);
+  $("#code").value=JSON.stringify(e,null,1);
+  er.className="okk";er.innerHTML="Gespeichert. <a href=\"#"+ty+"-"+e.id+"\">Eintrag öffnen</a> · Den Code unten kannst du kopieren.";
+ };
+ $("#copy").onclick=()=>{const c=$("#code");if(!c.value)return;c.select();try{navigator.clipboard.writeText(c.value)}catch(e){document.execCommand("copy")}};
+}
+function bindAll(){
+ const d=$("#del");if(d)d.onclick=()=>{if(!d.dataset.s){d.dataset.s="1";d.textContent="Wirklich löschen? Nochmal klicken";return}
+  const k=location.hash.slice(1).replace("-",""),loc=store.get("m431-local",[]);
+  if(loc.some(x=>key(x)===k))store.set("m431-local",loc.filter(x=>key(x)!==k));else store.set("m431-del",store.get("m431-del",[]).concat(k));
+  location.hash=k[0]==="l"?"#lernjournal":"#themen"};
+ document.querySelectorAll(".dn").forEach(x=>x.onchange=()=>{const i=+x.dataset.i,d=doneList().filter(n=>n!==i);if(x.checked)d.push(i);store.set("m431-done",d);const y=window.scrollY;route();window.scrollTo(0,y)});
+ document.querySelectorAll(".ck input").forEach(x=>x.onchange=()=>store.set("m431-check",[...document.querySelectorAll(".ck input")].filter(i=>i.checked).map(i=>+i.dataset.c)));
+ document.querySelectorAll(".ed").forEach(x=>x.oninput=()=>{const s=store.get("m431-einl",{});s[x.dataset.k]=x.textContent;store.set("m431-einl",s)});
+}
+
+function route(){
+ const h=(location.hash||"#start").slice(1),a=$("#app");let c="start",m;
+ if(h==="einleitung"){c=h;a.innerHTML=einleitung()}
+ else if(h==="lernjournal"){c=h;a.innerHTML=lernjournal()}
+ else if(h==="themen"){c=h;a.innerHTML=themen()}
+ else if(m=h.match(/^([lt])-(\d+)$/)){c=m[1]==="l"?"lernjournal":"themen";a.innerHTML=eintrag(m[1]+m[2])}
+ else if(h==="iperka"){c=h;a.innerHTML=iperka()}
+ else if(h==="abschluss"){c=h;a.innerHTML=abschluss()}
+ else if(h==="neu"||h==="neu-t"){c="neu";a.innerHTML=neu();bindNeu(h==="neu-t"?"t":"l")}
+ else a.innerHTML=start();
+ $("#nav").innerHTML=NAV.map(n=>`<a href="#${n[0]}" class="${c===n[0]?"on":""}">${n[1]}</a>`).join("");
+ document.body.dataset.p=c;window.scrollTo(0,0);bindAll();
+}
+addEventListener("hashchange",route);route();
+</script>
+</body>
+</html>
