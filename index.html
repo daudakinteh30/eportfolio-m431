@@ -217,5 +217,40 @@ function route(){
 }
 addEventListener("hashchange",route);route();
 </script>
-</body>
+
+<script type="module">
+import { createClient } from
+'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
+
+const SUPABASE_URL =
+'https://iewcwslpqzggmrplxawp.supabase.co';
+
+const SUPABASE_KEY =
+'sb_publishable_2pX9sHf32_xubYx8N61qnw_prqFEDFV';
+
+const supabase = createClient(
+  SUPABASE_URL,
+  SUPABASE_KEY
+);
+
+window.supabaseClient = supabase;
+
+async function testConnection() {
+  const { data, error } = await supabase
+    .from('journal_entries')
+    .select('*');
+
+  if (error) {
+    console.error('Supabase Fehler:', error.message);
+    return;
+  }
+
+  console.log('Supabase verbunden!');
+  console.log('Lernjournal-Einträge:', data);
+}
+
+testConnection();
+</script>
+
+$</body>
 </html>
